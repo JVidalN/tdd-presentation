@@ -7,3 +7,35 @@
 > - [Documentation](/docs) - PDF created specifically for presentation.
 > - [C# Code](/csharp-code) - Small example project in .Net Core with xUnit.
 > - [Javascript Code](/javascript-code) - Small example project in JavaScript with Jest.
+
+# Setup
+
+## For .Net Example
+
+Open in VS 2019 and run tests.
+
+## For JavaScript Example
+
+If yarn not installed:
+
+```javascript
+npm install --global yarn
+```
+
+If yarn already installed:
+
+```javascript
+yarn install
+//or
+yarn add jest
+```
+
+To run test:
+
+```javascript
+yarn test
+```
+
+# Credits
+
+The examples were based on the following project: [DotNet5 xUnit](https://github.com/renatogroffe/DotNet5-xUnit).
