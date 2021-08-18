@@ -14,8 +14,8 @@ namespace Temperature.tests
         [InlineData(212, 100)]
         public void TestsTemperatureConversor(double fahrenheit, double celsius)
         {
-            double valorCalculado = TemperatureConverter.FahrenheitToCelsius(fahrenheit);
-            Assert.Equal(celsius, valorCalculado);
+            double calculateVal = TemperatureConverter.FahrenheitToCelsius(fahrenheit);
+            Assert.Equal(celsius, calculateVal);
         }
     }
 }
