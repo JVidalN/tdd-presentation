@@ -1,0 +1,9 @@
+E:\Projetos\learn-tdd\csharp-code\Temperature\bin\Debug\netcoreapp3.1\Temperature.deps.json
+E:\Projetos\learn-tdd\csharp-code\Temperature\bin\Debug\netcoreapp3.1\Temperature.dll
+E:\Projetos\learn-tdd\csharp-code\Temperature\bin\Debug\netcoreapp3.1\Temperature.pdb
+E:\Projetos\learn-tdd\csharp-code\Temperature\obj\Debug\netcoreapp3.1\Temperature.GeneratedMSBuildEditorConfig.editorconfig
+E:\Projetos\learn-tdd\csharp-code\Temperature\obj\Debug\netcoreapp3.1\Temperature.AssemblyInfoInputs.cache
+E:\Projetos\learn-tdd\csharp-code\Temperature\obj\Debug\netcoreapp3.1\Temperature.AssemblyInfo.cs
+E:\Projetos\learn-tdd\csharp-code\Temperature\obj\Debug\netcoreapp3.1\Temperature.csproj.CoreCompileInputs.cache
+E:\Projetos\learn-tdd\csharp-code\Temperature\obj\Debug\netcoreapp3.1\Temperature.dll
+E:\Projetos\learn-tdd\csharp-code\Temperature\obj\Debug\netcoreapp3.1\Temperature.pdb
