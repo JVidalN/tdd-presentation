@@ -1,0 +1,678 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>TDD</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+.select-value-color-default { background-color: rgba(206,205,202,0.5); }
+.select-value-color-gray { background-color: rgba(155,154,151, 0.4); }
+.select-value-color-brown { background-color: rgba(140,46,0,0.2); }
+.select-value-color-orange { background-color: rgba(245,93,0,0.2); }
+.select-value-color-yellow { background-color: rgba(233,168,0,0.2); }
+.select-value-color-green { background-color: rgba(0,135,107,0.2); }
+.select-value-color-blue { background-color: rgba(0,120,223,0.2); }
+.select-value-color-purple { background-color: rgba(103,36,222,0.2); }
+.select-value-color-pink { background-color: rgba(221,0,129,0.2); }
+.select-value-color-red { background-color: rgba(255,0,26,0.2); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="5474d79a-9754-424c-a940-b66fc706ee42" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">🔄</span></div><h1 class="page-title">TDD</h1></header><div class="page-body"><ul id="218fd836-3313-4891-b4ca-23cd2f135ec3" class="toggle"><li><details open=""><summary>O que é TDD</summary><ul id="e3e8bd65-fb35-48ac-adb9-0297b27b635b" class="toggle"><li><details open=""><summary>Origem</summary><blockquote id="8b352fa5-8871-4ccb-bbc0-08a6b01fe934" class="">Surgiu por volta de 1990, onde foi introduzida inicialmente pelo XP (Extreme Programming), por Kent Beck. 
+O intuito era de encorajar o desenvolvimento de códigos simples, para que pudessem ser checados e validados com uma técnica igualmente simples.</blockquote></details></li></ul><ul id="4d790540-4ffe-40cc-b2a7-6929936d9d78" class="toggle"><li><details open=""><summary>Conceito</summary><blockquote id="c3b5e5e9-fdc1-431f-9e99-6f89d2076a33" class=""><strong>Test Driven Development</strong> - Metodologia a qual prega que os testes devem ser escritos antes da codificação propriamente dita, diferente do modelo tradicional.</blockquote><figure id="d6463b0f-107b-41c4-a1ba-8a8ce1b878e3" class="image"><a href="TDD%20d6463b0f107b41c4a1ba8a8ce1b878e3/Untitled.png"><img style="width:600px" src="TDD%20d6463b0f107b41c4a1ba8a8ce1b878e3/Untitled.png"/></a></figure></details></li></ul><ul id="932879ae-726d-449c-adf9-e29edd77adb0" class="toggle"><li><details open=""><summary>Etapas</summary><figure id="3602ac9f-a004-439d-8d62-9ea7127b8858" class="image"><a href="TDD%20d6463b0f107b41c4a1ba8a8ce1b878e3/Untitled%201.png"><img style="width:624px" src="TDD%20d6463b0f107b41c4a1ba8a8ce1b878e3/Untitled%201.png"/></a></figure></details></li></ul></details></li></ul><ul id="3e126d04-0d1a-44f8-ade4-6bee957f9153" class="toggle"><li><details open=""><summary>Bibliotecas</summary><ul id="bafda54a-9476-49ed-94fe-232d94dca0b9" class="toggle"><li><details open=""><summary>.Net</summary><ul id="ac49cac8-816a-42b0-828e-c232777e5dcf" class="bulleted-list"><li>MSTest</li></ul><ul id="74d6d34d-8ab6-4f55-8cfa-687fc6450ae9" class="bulleted-list"><li>xUnit</li></ul><ul id="72de7ed7-f95d-4e23-a591-38818609c8c9" class="bulleted-list"><li>nUnit</li></ul></details></li></ul><ul id="74e1dbd4-22bc-432f-be87-9b01c2a76071" class="toggle"><li><details open=""><summary>JavaScript</summary><ul id="d5469663-3957-491f-91c0-ce3de3d37951" class="bulleted-list"><li>Jest</li></ul><ul id="5d437599-34c4-48d3-bd8f-2cc2ff7247e5" class="bulleted-list"><li>Mocha + Chai</li></ul></details></li></ul><ul id="e4dc93dd-6652-490b-9eba-26f14b7796a5" class="toggle"><li><details open=""><summary>Java</summary><ul id="b13f45f3-586a-4eba-911d-380c2899a25a" class="bulleted-list"><li>JUnit</li></ul></details></li></ul><ul id="3d77e631-4df1-467a-b651-0a0f6c68cac3" class="toggle"><li><details open=""><summary>PHP</summary><ul id="d4a25d54-19ad-42ac-ac4a-4b2a4adef24e" class="bulleted-list"><li>PHPUnit</li></ul></details></li></ul></details></li></ul><ul id="98329227-f97f-4530-9436-19d44c09af3a" class="toggle"><li><details open=""><summary>Exemplos</summary><ul id="949dd384-43ac-4e66-9f82-082ebcdea9fe" class="toggle"><li><details open=""><summary>Boas Práticas</summary><ul id="d3c53f43-5ef7-473d-8c9f-9e117b2ffa6b" class="toggle"><li><details open=""><summary>Estrutura de Testes AAA e GWT</summary><blockquote id="8ebf821d-2fc1-4394-8b56-da9eaa5a27fd" class="">Padrões comuns de escrever testes de unidade, e que facilitam a leitura e compreensão do código com 3 passos.</blockquote><ul id="011454f2-7df3-4e7c-a8eb-93d08e7a44e8" class="bulleted-list"><li><strong>Given/Arrange</strong> - Definir um estado conhecido.</li></ul><ul id="c7624faf-214c-4caf-af1c-c6c0b91a153e" class="bulleted-list"><li><strong>When/Act </strong>- Rodar a aplicação</li></ul><ul id="91e8b35e-e8bd-48da-9ab7-4a0ea8a523e3" class="bulleted-list"><li><strong>Then/Asset </strong>- Certificar-se de que o novo estado é o estado esperado.</li></ul></details></li></ul></details></li></ul><ul id="65e81878-5b7d-48d2-b4dd-f43bbadd5d1a" class="toggle"><li><details open=""><summary>Simples</summary><ul id="2c93aadc-c3f9-4130-8724-f120bdd8f3ae" class="toggle"><li><details open=""><summary>Step 1 - Red</summary><pre id="8f25d764-2a0b-4bfc-8c79-1410aaa7132f" class="code"><code>[Fact]
+public void TestsTemperatureConversor()
+{
+		//Given/Arrange
+		double fahrenheit = 32;
+		double celsius = 0;
+
+		//When/Act
+    double calculateVal= TemperatureConverter.FahrenheitToCelsius(fahrenheit);
+    
+		//Then/Assert
+		Assert.Equal(celsius, calculateVal);
+}
+
+//First to fail
+public static class TemperatureConverter
+{
+    public static double FahrenheitToCelsius(double temperature)
+    {
+        throw new NotImplementedException();
+    }
+}</code></pre></details></li></ul><ul id="61bc5a1b-e7d2-417d-ae3a-ec09f0def0b8" class="toggle"><li><details open=""><summary>Step 2 - Green</summary><pre id="0df6ed4a-a9e4-42a6-9a5d-badc1368f9c1" class="code"><code>public static class TemperatureConverter
+{
+    public static double FahrenheitToCelsius(double temperature)
+    {
+        return Math.Round((temperature - 32) / 1.8, 2);
+    }
+}</code></pre></details></li></ul><ul id="d40e879f-9e52-482d-bdc4-ef834c1f48f8" class="toggle"><li><details open=""><summary>Step 3 - Refactor</summary><pre id="207560c6-1202-4447-ae20-c900dcbbc655" class="code"><code>/*
+It can be refactored or not. If the code is very simple, 
+there is no need to refactor. In another scenario, 
+this could be refactored using an external service for example.
+*/
+public static class TemperatureConverter
+{
+    public static double FahrenheitToCelsius(double temperature)
+    {
+        return Math.Round((temperature - 32) / 1.8, 2);
+    }
+}</code></pre></details></li></ul></details></li></ul></details></li></ul><ul id="4cdbecad-80bc-467b-9112-783ce34cee7c" class="toggle"><li><details open=""><summary>Prática</summary><ul id="af8cab38-76ff-4083-964c-52c96e53be41" class="toggle"><li><details open=""><summary>GitHub Link</summary><figure id="385e9db5-7aa6-404a-bbdd-2e41a79b8b15"><a href="https://github.com/JVidalN/tdd-presentation" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">GitHub - JVidalN/tdd-presentation: Assets for KT (Knowledge Transfer) presentation about TDD</div><div class="bookmark-description">Assets for KT (Knowledge Transfer) presentation about TDD - GitHub - JVidalN/tdd-presentation: Assets for KT (Knowledge Transfer) presentation about TDD</div></div><div class="bookmark-href"><img src="https://github.com/favicon.ico" class="icon bookmark-icon"/>https://github.com/JVidalN/tdd-presentation</div></div><img src="https://opengraph.githubassets.com/45915a3d430678812c29b1a980614a8e920a7620cae00886c4f22c0dff599da6/JVidalN/tdd-presentation" class="bookmark-image"/></a></figure></details></li></ul><ul id="27f75704-4752-412d-bdd6-b3e1154c87f8" class="toggle"><li><details open=""><summary>Projeto em .Net</summary><ol type="1" id="6b6217aa-c3c2-453d-82ea-fea5381797ce" class="numbered-list" start="1"><li>Create a Blank Solution</li></ol><ol type="1" id="590eabb4-bf98-4331-ab1c-3ab1b7178145" class="numbered-list" start="2"><li>Add xUnit Project<ol type="a" id="c444f3bc-8a4e-43df-8726-42ad513cf79a" class="numbered-list" start="1"><li>Create tests</li></ol></li></ol><ol type="1" id="bd84761e-79aa-4867-9be1-0a3f514549dc" class="numbered-list" start="3"><li>Add Class library project<ol type="a" id="db14558e-9227-425a-9e08-2b385e940282" class="numbered-list" start="1"><li>Create class</li></ol></li></ol></details></li></ul><ul id="61ae6831-4dfa-4652-ac8a-cbc8f0b681b3" class="toggle"><li><details open=""><summary>Projeto em JavaScript</summary><ol type="1" id="80de33e2-2347-42d1-8a5b-90ae3363f766" class="numbered-list" start="1"><li>Project setup<p id="902c49a8-93c3-4463-a91f-5964924302a7" class=""><code>yarn install</code> or <code>yarn add jest</code></p></li></ol><ol type="1" id="6ea076d5-11a0-4057-ac38-81d27d5b21f2" class="numbered-list" start="2"><li>Change package.json<pre id="b4c6bebd-bdca-49dc-84d8-cb2fe6c87930" class="code"><code>&quot;scripts&quot;: {
+    &quot;test&quot;: &quot;jest&quot;
+  }</code></pre></li></ol><ol type="1" id="83c1cdea-0f36-418d-a114-8f92bb2b7d50" class="numbered-list" start="3"><li>Create test file</li></ol><ol type="1" id="02cada57-1ee5-4704-b5b8-1c83d62aa2ad" class="numbered-list" start="4"><li>Create function</li></ol><ol type="1" id="b415669a-9906-44de-be3e-8b35975f54a3" class="numbered-list" start="5"><li>Execute tests<p id="737ea81a-dbc6-4ae0-a3f5-64790b679f9a" class=""><code>yarn tests</code></p></li></ol></details></li></ul></details></li></ul><ul id="63d1ff42-f0bf-4e1d-b5de-c4319c1224d1" class="toggle"><li><details open=""><summary>Prós e Contras</summary><ul id="dcff669a-85ee-4ea4-a08a-30abac1cb1d4" class="toggle"><li><details open=""><summary>Prós</summary><ul id="1867b14d-aed7-4c5d-9e73-0a743b3ef81e" class="bulleted-list"><li>Capacidade de reduzir pequenos bugs</li></ul><ul id="a4d1d669-41a8-4743-88ff-c3ac16c6d78b" class="bulleted-list"><li>Código mais limpo e simples, eliminando códigos desnecessários</li></ul><ul id="6232c777-5cec-416e-a856-a261c9feba56" class="bulleted-list"><li>Confiabilidade do código</li></ul><ul id="65151939-c124-4572-b3b4-a181696b79e0" class="bulleted-list"><li>Favorece o processo de documentação</li></ul><ul id="e5e2e122-656f-4841-8ee2-1aa48ff1bad5" class="bulleted-list"><li>Facilita o refactoring</li></ul></details></li></ul><ul id="02e2acb6-ad96-49d8-90b9-6bb85d9c1d18" class="toggle"><li><details open=""><summary>Contra</summary><ul id="0b463abc-a867-4cab-b63e-0c3cd860f4a0" class="bulleted-list"><li>Curva de aprendizado</li></ul><ul id="fd5597b5-49ab-450f-89bd-ea0cae323c10" class="bulleted-list"><li>Os testes se tornam parte da manutenção do projeto</li></ul><ul id="d64f4358-2a12-4dfe-a2ad-49bef39aecc9" class="bulleted-list"><li>Torna o projeto &quot;caro&quot;</li></ul></details></li></ul></details></li></ul><ul id="67a0776a-7dbe-40f9-aba6-1b1294866053" class="toggle"><li><details open=""><summary>Dúvidas</summary><figure id="a0966fc0-e3c3-4afc-8445-31f7068b0966" class="image"><a href="TDD%20d6463b0f107b41c4a1ba8a8ce1b878e3/Untitled%202.png"><img style="width:432px" src="TDD%20d6463b0f107b41c4a1ba8a8ce1b878e3/Untitled%202.png"/></a></figure></details></li></ul><p id="d0b592e9-892c-455e-9326-944c77d63ad2" class="">
+</p></div></article></body></html>
