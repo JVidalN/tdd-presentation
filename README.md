@@ -5,6 +5,7 @@
 > #### I divided the project as follows:
 >
 > - [Documentation](/docs) - PDF created specifically for presentation.
+> - [Notion Documentation](https://www.notion.so/TDD-5474d79a9754424ca940b66fc706ee42) - Documentation created specifically for the presentation and originating the PDF.
 > - [C# Code](/csharp-code) - Small example project in .Net Core with xUnit.
 > - [Javascript Code](/javascript-code) - Small example project in JavaScript with Jest.
 
